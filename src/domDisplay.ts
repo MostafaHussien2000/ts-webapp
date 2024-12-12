@@ -16,7 +16,7 @@ export class DOMDisplay {
   getElementText() {
     return (
       `${this.props.products.length} Products, ` +
-      `Order Total: ${this.props.order.total.toFixed(2)}`
+      `Order Total: $${this.props.order.total.toFixed(2)}`
     );
   }
 }
