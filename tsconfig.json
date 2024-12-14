@@ -5,6 +5,7 @@
     "rootDir": "./src",
     "jsx": "react",
     "jsxFactory": "createElement",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true
   }
 }
