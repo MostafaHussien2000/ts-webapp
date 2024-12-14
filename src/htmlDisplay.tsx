@@ -43,15 +43,15 @@ export class HTMLDisplay {
     );
 
     this.containerELement.appendChild(content);
-  }
+  };
 
   addToOrder = (prod: Product, quantity: number): void => {
     this.props.dataSource.order.addProduct(prod, quantity);
     this.updateContent();
-  }
+  };
 
   selectCategory = (cat: string): void => {
     this.selectedCategory = cat === "All" ? undefined : cat;
     this.updateContent();
-  }
+  };
 }
