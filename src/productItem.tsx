@@ -6,7 +6,7 @@ export class ProductItem {
 
   props: {
     product: Product;
-    callback: (product: Product, quantity: number) => void;
+    callback?: (product: Product, quantity: number) => void;
   };
 
   getContent(): HTMLElement {
@@ -28,7 +28,7 @@ export class ProductItem {
             className="btn btn-success btn-sm float-end"
             onClick={this.handleAddToCart}
           >
-            {"Add to cart"}
+            Add to cart
           </button>
 
           {/* HTML Select Element */}
@@ -36,7 +36,7 @@ export class ProductItem {
             name="quantity"
             title="select quantity"
             className="form-control-inline float-end m-1 mx-3"
-            onchange={this.handleQuantityChange}
+            onChange={this.handleQuantityChange}
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -48,12 +48,12 @@ export class ProductItem {
   }
 
   handleAddToCart = (): void => {
-    this.props.callback(this.props.product, this._quantity);
-    console.log(`You added product (${this.props.product.name}) to cart.`);
+    if (this.props.callback) {
+      this.props.callback(this.props.product, this._quantity);
+    }
   };
 
   handleQuantityChange =  (e: Event) => {
     this._quantity = Number((e.target as HTMLSelectElement).value);
-    console.log(`Changed product (${this.props.product.name}) quantity to (${this._quantity}).`)
   };
 }

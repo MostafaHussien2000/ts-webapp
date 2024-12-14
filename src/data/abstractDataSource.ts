@@ -15,7 +15,10 @@ export abstract class AbstractSourceData {
     this.loading = this.getData();
   }
 
-  async getProducts(sortProp: ProductProp = "id", category?: string): Promise<Product[]> {
+  async getProducts(
+    sortProp: ProductProp = "id",
+    category?: string
+  ): Promise<Product[]> {
     await this.loading;
     return this.selectProducts(this._products, sortProp, category);
   }
@@ -30,7 +33,11 @@ export abstract class AbstractSourceData {
     });
   }
 
-  protected selectProducts(prods: Product[], sortProp: ProductProp, category?: string): Product[] {
+  protected selectProducts(
+    prods: Product[],
+    sortProp: ProductProp,
+    category?: string
+  ): Product[] {
     return prods
       .filter((prod) => category === undefined || prod.category === category)
       .sort((prod1, prod2) =>

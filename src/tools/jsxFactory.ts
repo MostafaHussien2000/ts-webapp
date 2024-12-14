@@ -12,7 +12,23 @@ export function createElement(
   if (typeof tag === "function")
     return Object.assign(new tag(), { props: props || {} }).getContent();
 
-  const el = Object.assign(document.createElement(tag), props || {});
+  const el = document.createElement(tag);
+  
+  if (props) {
+    Object.entries(props).forEach(([name, value]) => {
+      if (name.startsWith('on') && typeof value === 'function') {
+        // Handle event listeners
+        el.addEventListener(name.toLowerCase().substring(2), value);
+      } else {
+        // Handle regular attributes
+        if (name === 'className') {
+          el.setAttribute('class', value as string);
+        } else {
+          el.setAttribute(name, value as string);
+        }
+      }
+    });
+  }
 
   children.forEach((child) =>
     Array.isArray(child)

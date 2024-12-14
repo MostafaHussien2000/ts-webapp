@@ -21,7 +21,7 @@ export class HTMLDisplay {
     return this.containerELement;
   }
 
-  async updateContent(): Promise<void> {
+  updateContent = async (): Promise<void> => {
     let products = await this.props.dataSource.getProducts(
       "id",
       this.selectedCategory
@@ -35,8 +35,8 @@ export class HTMLDisplay {
         <ProductList
           products={products}
           categories={categories}
-          addToOrder={this.addToOrder}
-          filterByCategory={this.selectCategory}
+          addToOrderCallback={this.addToOrder}
+          filterCallback={this.selectCategory}
           selectedCategory={this.selectedCategory}
         />
       </div>
@@ -45,12 +45,12 @@ export class HTMLDisplay {
     this.containerELement.appendChild(content);
   }
 
-  addToOrder(prod: Product, quantity: number): void {
+  addToOrder = (prod: Product, quantity: number): void => {
     this.props.dataSource.order.addProduct(prod, quantity);
-    this.updateContent()
+    this.updateContent();
   }
 
-  selectCategory(cat: string): void {
+  selectCategory = (cat: string): void => {
     this.selectedCategory = cat === "All" ? undefined : cat;
     this.updateContent();
   }

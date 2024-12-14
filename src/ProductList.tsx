@@ -8,8 +8,8 @@ export class ProductList {
     products: Product[];
     categories: string[];
     selectedCategory: string;
-    addToOrder: (prod: Product, quantity: number) => void;
-    filterByCategory: (cat: string) => void;
+    addToOrderCallback?: (prod: Product, quantity: number) => void;
+    filterCallback?: (category: string) => void;
   };
 
   getContent(): HTMLElement {
@@ -19,13 +19,13 @@ export class ProductList {
           <div className="col-3 p-2">
             <CategoryList
               categories={this.props.categories}
-              callback={this.props.filterByCategory}
+              callback={this.props.filterCallback}
               selectedCategory={this.props.selectedCategory}
             />
           </div>
           <div className="col-9 p-2">
             {this.props.products.map((prod) => (
-              <ProductItem product={prod} callback={this.props.addToOrder} />
+              <ProductItem product={prod} callback={this.props.addToOrderCallback} />
             ))}
           </div>
         </div>

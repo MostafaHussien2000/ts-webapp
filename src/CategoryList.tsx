@@ -29,6 +29,7 @@ export class CategoryList {
 
     return (
       <button
+        type="button"
         className={`btn btn-block ${btnClass} m-1`}
         onClick={() => this.props.callback(cat)}
       >
