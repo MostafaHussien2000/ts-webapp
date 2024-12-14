@@ -2,46 +2,58 @@ import { createElement } from "./tools/jsxFactory";
 import { Product } from "./data/entities";
 
 export class ProductItem {
-    private _quantity: number = 1;
+  private _quantity: number = 1;
 
-    props: {
-        product: Product;
-        callback: (product: Product, quantity: number) => void;
-    };
+  props: {
+    product: Product;
+    callback: (product: Product, quantity: number) => void;
+  };
 
-    getContent(): HTMLElement {
-        return (
-            <div className="card m-1 p-1 bg-light">
-                <h4>
-                    {this.props.product.name}
-                    <span className="badge badge-pill badge-primary float-right">
-                        ${this.props.product.price.toFixed(2)}
-                    </span>
-                </h4>
-                <div className="card-text">
-                    {this.props.product.description}
-                    <button className="btn btn-primary"
-                        onClick={this.handleAddToCart}
-                    >
-                        Add To Cart
-                    </button>
-                    <select className="form-control-inline float-right m-1"
-                        onchange={this.handleQuantityChange}>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
-                </div>
-            </div>
-        )
-    }
+  getContent(): HTMLElement {
+    return (
+      <div className="card m-1 p-4 bg-light">
+        <h4 className="d-flex justify-content-between">
+          {this.props.product.name}
+          <span className="badge rounded-pill bg-primary fs-6 fw-normal">
+            ${this.props.product.price.toFixed(2)}
+          </span>
+        </h4>
+        <div className="card-text bg-white p-2">
+          {/* Product Description */}
+          {this.props.product.description}
 
-    handleAddToCart = (): void => {
-        this.props.callback(this.props.product, this._quantity);
+          {/* Add To Cart - Button */}
+          <button
+            type="button"
+            className="btn btn-success btn-sm float-end"
+            onClick={this.handleAddToCart}
+          >
+            {"Add to cart"}
+          </button>
 
-    }
+          {/* HTML Select Element */}
+          <select
+            name="quantity"
+            title="select quantity"
+            className="form-control-inline float-end m-1 mx-3"
+            onchange={this.handleQuantityChange}
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+          </select>
+        </div>
+      </div>
+    );
+  }
 
-    handleQuantityChange = (e: Event) => {
-        this._quantity = Number((e.target as HTMLSelectElement).value);
-    }
+  handleAddToCart = (): void => {
+    this.props.callback(this.props.product, this._quantity);
+    console.log(`You added product (${this.props.product.name}) to cart.`);
+  };
+
+  handleQuantityChange =  (e: Event) => {
+    this._quantity = Number((e.target as HTMLSelectElement).value);
+    console.log(`Changed product (${this.props.product.name}) quantity to (${this._quantity}).`)
+  };
 }

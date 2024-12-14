@@ -1,7 +1,7 @@
 import { createElement } from "./tools/jsxFactory";
 import { Product } from "./data/entities";
-import { CategoryList } from "./categoryList";
-import { ProductItem } from "./productItem";
+import { CategoryList } from "./CategoryList";
+import { ProductItem } from "./ProductItem";
 
 export class ProductList {
   props: {
@@ -14,22 +14,19 @@ export class ProductList {
 
   getContent(): HTMLElement {
     return (
-      <div className="row">
-        <div className="col-3 p-2">
-          <CategoryList
-            categories={this.props.categories}
-            callback={this.props.filterByCategory}
-            selectedCategory={this.props.selectedCategory}
-          />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-3 p-2">
+            <CategoryList
+              categories={this.props.categories}
+              callback={this.props.filterByCategory}
+              selectedCategory={this.props.selectedCategory}
+            />
+          </div>
           <div className="col-9 p-2">
-            {
-                this.props.products.map(prod => (
-                    <ProductItem
-                        product={prod}
-                        callback={this.props.addToOrder}
-                    />
-                ))
-            }
+            {this.props.products.map((prod) => (
+              <ProductItem product={prod} callback={this.props.addToOrder} />
+            ))}
           </div>
         </div>
       </div>

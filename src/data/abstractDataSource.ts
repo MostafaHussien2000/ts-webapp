@@ -42,7 +42,8 @@ export abstract class AbstractSourceData {
       );
   }
 
-  get categories(): string[] {
+  async getCategories(): Promise<string[]> {
+    await this.loading;
     return Array.from(this._categories.values());
   }
 

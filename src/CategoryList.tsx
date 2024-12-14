@@ -9,10 +9,12 @@ export class CategoryList {
 
   getContent(): HTMLElement {
     return (
-      <div>
-        {["All", ...this.props.categories].map((c) =>
-          this.getCategoryButton(c)
-        )}
+      <div className="container">
+        <div className="row">
+          {["All", ...this.props.categories].map((c) =>
+            this.getCategoryButton(c)
+          )}
+        </div>
       </div>
     );
   }
@@ -27,7 +29,7 @@ export class CategoryList {
 
     return (
       <button
-        className={`btn btn-block ${btnClass}`}
+        className={`btn btn-block ${btnClass} m-1`}
         onClick={() => this.props.callback(cat)}
       >
         {cat}
