@@ -6,7 +6,7 @@ export class ProductItem {
 
     props: {
         product: Product;
-        callbakc: (product: Product, quantity: number) => void;
+        callback: (product: Product, quantity: number) => void;
     };
 
     getContent(): HTMLElement {
@@ -37,7 +37,7 @@ export class ProductItem {
     }
 
     handleAddToCart = (): void => {
-        this.props.callbakc(this.props.product, this._quantity);
+        this.props.callback(this.props.product, this._quantity);
 
     }
 
