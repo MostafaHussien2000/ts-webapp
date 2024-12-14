@@ -3,9 +3,8 @@ import { Product, Order } from "./entities";
 export type ProductProp = keyof Product;
 
 export abstract class AbstractSourceData {
-  private _products: Product[];
-  private _categories: Set<string>;
-
+  protected _products: Product[];
+  protected _categories: Set<string>;
   public order: Order;
   public loading: Promise<void>;
 
@@ -16,10 +15,7 @@ export abstract class AbstractSourceData {
     this.loading = this.getData();
   }
 
-  async getProducts(
-    sortProp: ProductProp = "id",
-    category?: string
-  ): Promise<Product[]> {
+  async getProducts(sortProp: ProductProp = "id", category?: string): Promise<Product[]> {
     await this.loading;
     return this.selectProducts(this._products, sortProp, category);
   }
@@ -34,11 +30,7 @@ export abstract class AbstractSourceData {
     });
   }
 
-  protected selectProducts(
-    prods: Product[],
-    sortProp: ProductProp,
-    category?: string
-  ): Product[] {
+  protected selectProducts(prods: Product[], sortProp: ProductProp, category?: string): Product[] {
     return prods
       .filter((prod) => category === undefined || prod.category === category)
       .sort((prod1, prod2) =>
@@ -50,12 +42,10 @@ export abstract class AbstractSourceData {
       );
   }
 
-  async getCategories(): Promise<string[]> {
-    await this.loading;
+  get categories(): string[] {
     return Array.from(this._categories.values());
   }
 
   protected abstract loadProducts(): Promise<Product[]>;
-
   abstract storeOrder(): Promise<number>;
 }

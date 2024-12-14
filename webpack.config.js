@@ -4,12 +4,15 @@ module.exports = {
   mode: "development",
   devtool: "inline-source-map",
   entry: "./src/index.ts",
-  output: { filename: "bundle.js" },
-  resolve: { extensions: [".ts", ".js", ".css"] },
+  output: { 
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
+  },
+  resolve: { extensions: [".ts", ".tsx", ".js", ".css"] },
   module: {
     rules: [
       {
-        test: /\.ts/,
+        test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },
@@ -38,5 +41,6 @@ module.exports = {
     },
     compress: true,
     port: 4500,
+    hot: true
   },
 };

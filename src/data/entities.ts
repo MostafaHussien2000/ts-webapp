@@ -15,22 +15,31 @@ export class OrderLine {
 }
 
 export class Order {
-  private lines = new Map<number, OrderLine>();
+  private readonly lines: Map<number, OrderLine>;
 
   constructor(initialLines?: OrderLine[]) {
+    this.lines = new Map<number, OrderLine>();
     if (initialLines) {
       initialLines.forEach((line) => this.lines.set(line.product.id, line));
     }
   }
 
-  public addProduct(prod: Product, quantity: number) {
+  public addProduct(prod: Product, quantity: number): void {
     if (this.lines.has(prod.id)) {
-      if (quantity === 0) this.removeProduct(prod.id);
-      else this.lines.get(prod.id)!.quantity += quantity;
-    } else this.lines.set(prod.id, new OrderLine(prod, quantity));
+      if (quantity === 0) {
+        this.removeProduct(prod.id);
+      } else {
+        const line = this.lines.get(prod.id);
+        if (line) {
+          line.quantity += quantity;
+        }
+      }
+    } else {
+      this.lines.set(prod.id, new OrderLine(prod, quantity));
+    }
   }
 
-  public removeProduct(productId: number) {
+  public removeProduct(productId: number): void {
     this.lines.delete(productId);
   }
 
@@ -39,16 +48,14 @@ export class Order {
   }
 
   get productCount(): number {
-    return [...this.lines.values()].reduce(
-      (total, line) => (total += line.total),
-      0
-    );
+    return this.orderLines.reduce((total, line) => total + line.quantity, 0);
   }
 
+  /**
+   * Calculates the total price of all order lines in the order.
+   * @returns The sum of the total prices of each order line.
+   */
   get total(): number {
-    return Array.from(this.lines.values()).reduce(
-      (total, line) => (total += line.total),
-      0
-    );
+    return this.orderLines.reduce((total, line) => total + line.total, 0);
   }
 }
