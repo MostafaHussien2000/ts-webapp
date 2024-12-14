@@ -7,7 +7,7 @@
     "dev": "tsc && node dist/index.js",
     "build": "tsc",
     "start": "npm-run-all -p json wds",
-    "json": "json-server data.js -p 4600",
+    "json": "json-server data.json -p 4600",
     "wds": "webpack serve"
   },
   "keywords": [],
@@ -27,6 +27,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3"
   }
 }

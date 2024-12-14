@@ -1,7 +1,7 @@
 import { createElement } from "./tools/jsxFactory";
 import { Product } from "./data/entities";
 import { CategoryList } from "./CategoryList";
-import { ProductItem } from "./ProductItem";
+import { ProductItem } from "./productItem";
 
 export class ProductList {
   props: {
@@ -25,7 +25,10 @@ export class ProductList {
           </div>
           <div className="col-9 p-2">
             {this.props.products.map((prod) => (
-              <ProductItem product={prod} callback={this.props.addToOrderCallback} />
+              <ProductItem
+                product={prod}
+                callback={this.props.addToOrderCallback}
+              />
             ))}
           </div>
         </div>
