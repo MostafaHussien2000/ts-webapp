@@ -2,6 +2,7 @@ import { createElement } from "./tools/jsxFactory";
 import { Product } from "./data/entities";
 import { CategoryList } from "./CategoryList";
 import { ProductItem } from "./ProductItem";
+import { addClass } from "./decorators";
 
 export class ProductList {
   props: {
@@ -12,6 +13,7 @@ export class ProductList {
     filterCallback?: (category: string) => void;
   };
 
+  @addClass("select", "bg-info", "m-1")
   getContent(): HTMLElement {
     return (
       <div className="container-fluid">
