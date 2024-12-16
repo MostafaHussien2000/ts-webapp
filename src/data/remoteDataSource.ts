@@ -20,6 +20,9 @@ export class RemoteDataSource extends AbstractSourceData {
   }
 
   async storeOrder(): Promise<number> {
+    if (Array.from(this.order.orderLines.values()).length === 0)
+      throw new Error("You can't place an empty order.");
+
     let orderData = {
       lines: Array.from(this.order.orderLines.values()).map((line) => ({
         productId: line.product.id,

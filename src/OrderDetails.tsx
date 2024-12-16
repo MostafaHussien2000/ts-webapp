@@ -13,36 +13,42 @@ export class OrderDetails {
       <div className="">
         <h3 className="text-center bg-primary text-white p-2">Order Summary</h3>
         <div className="p-3">
-          <table className="table table-sm table-striped">
-            <thead>
-              <tr>
-                <th>Quantity</th>
-                <th>Product</th>
-                <th className="text-right">Price</th>
-                <th className="text-right">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.order.orderLines.map(
-                (line): HTMLTableRowElement => (
-                  <tr>
-                    <td>{line.quantity}</td>
-                    <td>{line.product.name}</td>
-                    <td className="text-right">{line.product.price}</td>
-                    <td className="text-right">${line.total.toFixed(2)}</td>
-                  </tr>
-                )
-              )}
-            </tbody>
-            <tfoot>
-              <tr>
-                <th className="text-right" colSpan="3">
-                  Total:
-                </th>
-                <th className="text-right">$${this.props.order.total}</th>
-              </tr>
-            </tfoot>
-          </table>
+          {this.props.order.orderLines.length === 0 ? (
+            <center>
+              <p>You did not add any products to the cart.</p>
+            </center>
+          ) : (
+            <table className="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Product</th>
+                  <th className="text-right">Price</th>
+                  <th className="text-right">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.order.orderLines.map(
+                  (line): HTMLTableRowElement => (
+                    <tr>
+                      <td>{line.quantity}</td>
+                      <td>{line.product.name}</td>
+                      <td className="text-right">{line.product.price}</td>
+                      <td className="text-right">${line.total.toFixed(2)}</td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th className="text-right" colSpan="3">
+                    Total:
+                  </th>
+                  <th className="text-right">$${this.props.order.total}</th>
+                </tr>
+              </tfoot>
+            </table>
+          )}
         </div>
         <div className="text-center">
           <button
@@ -51,12 +57,16 @@ export class OrderDetails {
           >
             Back
           </button>
-          <button
-            className="btn btn-primary m-1"
-            onClick={this.props.submitCallback}
-          >
-            Submit Order
-          </button>
+          {this.props.order.orderLines.length ? (
+            <button
+              className="btn btn-primary m-1"
+              onClick={this.props.submitCallback}
+            >
+              Submit Order
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
