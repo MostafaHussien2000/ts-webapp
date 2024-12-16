@@ -28,7 +28,7 @@ export class RemoteDataSource extends AbstractSourceData {
       })),
     };
 
-    const { data } = await Axios.get(URLs.orders);
+    const { data } = await Axios.post(URLs.orders, orderData);
 
     return data.id;
   }

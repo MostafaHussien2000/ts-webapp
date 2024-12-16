@@ -2,7 +2,7 @@ import { createElement } from "./tools/jsxFactory";
 
 export class Summary {
   props: {
-    orderId: number;
+    orderId: any;
     callback: () => void;
   };
 
@@ -13,7 +13,9 @@ export class Summary {
         <p>Thanks for placing your order.</p>
         <p>
           Your order id is{" "}
-          <span className="badge badge-secondary">#{this.props.orderId}</span>
+          <span className="badge badge-secondary bg-secondary">
+            {this.props.orderId}
+          </span>
         </p>
         <p>We will ship your order as soon as possible.</p>
         <button

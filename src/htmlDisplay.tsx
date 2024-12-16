@@ -104,11 +104,16 @@ export class HTMLDisplay {
   };
 
   submitOrder = () => {
-    this.props.dataSource.storeOrder().then((id) => {
-      this.orderId = id;
-      this.props.dataSource.order = new Order();
-      this.mode = displayMode.Complete;
-      this.updateContent();
-    });
+    this.props.dataSource
+      .storeOrder()
+      .then((id) => {
+        this.orderId = id;
+        this.props.dataSource.order = new Order();
+        this.mode = displayMode.Complete;
+        this.updateContent();
+      })
+      .catch((err: Error) => {
+        console.error(err.message);
+      });
   };
 }
