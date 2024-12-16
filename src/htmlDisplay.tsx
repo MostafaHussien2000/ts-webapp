@@ -2,11 +2,24 @@ import { createElement } from "./tools/jsxFactory";
 import { Product, Order } from "./data/entities";
 
 import { AbstractSourceData } from "./data/abstractDataSource";
+
 import { ProductList } from "./ProductList";
+import { Header } from "./Header";
+import { OrderDetails } from "./OrderDetails";
+import { Summary } from "./Summary";
+
+enum displayMode {
+  List,
+  Details,
+  Complete,
+}
 
 export class HTMLDisplay {
   private containerELement: HTMLElement;
   private selectedCategory: string;
+
+  private mode: displayMode = displayMode.List;
+  private orderId: number;
 
   constructor() {
     this.containerELement = document.createElement("div");
@@ -30,18 +43,25 @@ export class HTMLDisplay {
 
     this.containerELement.innerHTML = "";
 
-    let content = (
-      <div>
-        <ProductList
-          products={products}
-          categories={categories}
-          addToOrderCallback={this.addToOrder}
-          filterCallback={this.selectCategory}
-          selectedCategory={this.selectedCategory}
-        />
-      </div>
-    );
+    let content: HTMLElement;
 
+    switch (this.mode) {
+      case displayMode.List:
+        content = this.getListContent(products, categories);
+        break;
+      case displayMode.Details:
+        content = (
+          <OrderDetails
+            order={this.props.dataSource.order}
+            cancelCallback={this.showList}
+            submitCallback={this.submitOrder}
+          />
+        );
+        break;
+      case displayMode.Complete:
+        content = <Summary orderId={this.orderId} callback={this.showList} />;
+        break;
+    }
     this.containerELement.appendChild(content);
   };
 
@@ -53,5 +73,42 @@ export class HTMLDisplay {
   selectCategory = (cat: string): void => {
     this.selectedCategory = cat === "All" ? undefined : cat;
     this.updateContent();
+  };
+
+  // Display Modes Methods
+  getListContent = (products: Product[], categories: string[]): HTMLElement => {
+    return (
+      <div>
+        <Header
+          order={this.props.dataSource.order}
+          submitCallback={this.showDetails}
+        />
+        <ProductList
+          products={products}
+          categories={categories}
+          addToOrderCallback={this.addToOrder}
+          filterCallback={this.selectCategory}
+          selectedCategory={this.selectedCategory}
+        />
+      </div>
+    );
+  };
+
+  showDetails = () => {
+    this.mode = displayMode.Details;
+    this.updateContent();
+  };
+  showList = () => {
+    this.mode = displayMode.List;
+    this.updateContent();
+  };
+
+  submitOrder = () => {
+    this.props.dataSource.storeOrder().then((id) => {
+      this.orderId = id;
+      this.props.dataSource.order = new Order();
+      this.mode = displayMode.Complete;
+      this.updateContent();
+    });
   };
 }
