@@ -2,15 +2,17 @@ import { AbstractSourceData } from "./abstractDataSource";
 import { Product } from "./entities";
 import Axios from "axios";
 
-const PROTOCOL = "http",
-  HOSTNAME = "localhost",
-  PORT = 4600;
+// const PROTOCOL = "http",
+//   HOSTNAME = "localhost",
+//   PORT = 4600;
 
-const baseURL = `${PROTOCOL}://${HOSTNAME}:${PORT}`;
+// const baseURL = `${PROTOCOL}://${HOSTNAME}:${PORT}`;
 
 const URLs = {
-  products: `${baseURL}/products`,
-  orders: `${baseURL}/orders`,
+  // products: `${baseURL}/products`,
+  // orders: `${baseURL}/orders`,
+  products: "/api/products",
+  orders: "/api/orders",
 };
 
 export class RemoteDataSource extends AbstractSourceData {
