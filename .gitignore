@@ -3,4 +3,4 @@
 /.vscode
 
 package-lock.json
-/data.json
+data.json

@@ -2,15 +2,17 @@ import { AbstractSourceData } from "./abstractDataSource";
 import { Product } from "./entities";
 import Axios from "axios";
 
-const PROTOCOL = "http",
-  HOSTNAME = "localhost",
-  PORT = 4600;
+// const PROTOCOL = "http",
+//   HOSTNAME = "localhost",
+//   PORT = 4600;
 
-const baseURL = `${PROTOCOL}://${HOSTNAME}:${PORT}`;
+// const baseURL = `${PROTOCOL}://${HOSTNAME}:${PORT}`;
 
 const URLs = {
-  products: `${baseURL}/products`,
-  orders: `${baseURL}/orders`,
+  // products: `${baseURL}/products`,
+  // orders: `${baseURL}/orders`,
+  products: "/api/products",
+  orders: "/api/orders",
 };
 
 export class RemoteDataSource extends AbstractSourceData {
@@ -20,6 +22,9 @@ export class RemoteDataSource extends AbstractSourceData {
   }
 
   async storeOrder(): Promise<number> {
+    if (Array.from(this.order.orderLines.values()).length === 0)
+      throw new Error("You can't place an empty order.");
+
     let orderData = {
       lines: Array.from(this.order.orderLines.values()).map((line) => ({
         productId: line.product.id,
